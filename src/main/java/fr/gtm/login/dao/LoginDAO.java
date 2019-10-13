@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import fr.gtm.login.entities.Utilisateur;
+import fr.gtm.login.entities.User;
 
 public class LoginDAO {
 	private EntityManagerFactory emf;
@@ -15,7 +15,7 @@ public class LoginDAO {
 		this.emf = emf;
 	}
 	
-	public void create(Utilisateur utilisateur) {
+	public void create(User utilisateur) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
@@ -25,26 +25,17 @@ public class LoginDAO {
 		em.close();
 	}
 	
-	public Utilisateur getUtilisateurByNom(String nom) {
+	public User getUtilisateurByNom(String nom) {
 		EntityManager em = emf.createEntityManager();
-		Utilisateur utilisateur = em.find(Utilisateur.class, nom);
+		User utilisateur = em.find(User.class, nom);
 		em.close();
 		return utilisateur;
 	}
-	
-	public List<String> getRoleByNom(String nom) {
-		EntityManager em = emf.createEntityManager();
-		String roles2 = em.createNamedQuery("Role.all",String.class).setParameter("nom", nom).getSingleResult();
-		String[] roles3 = roles2.split(",");
-		List<String> roles = Arrays.asList(roles3);
-		em.close();
-		return roles;
-	}
 
 	
-	public Utilisateur testConnexion(String nom,String motDePass) {
+	public User testConnexion(String nom,String password) {
 		EntityManager em = emf.createEntityManager();
-		Utilisateur u = em.createNamedQuery("Utilisateur.testConnexion", Utilisateur.class).setParameter("nom", nom).setParameter("motDePass", motDePass).getSingleResult();
+		User u = em.createNamedQuery("Login", User.class).setParameter("nom", nom).setParameter("password", password).getSingleResult();
 
 		return u;
 		

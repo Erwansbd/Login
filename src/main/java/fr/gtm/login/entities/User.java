@@ -12,10 +12,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-	@NamedQuery(name = "Utilisateur.testConnexion", query = "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.motDePass = :motDePass"),
-	@NamedQuery(name="Role.all", query = "SELECT u.role FROM Utilisateur u WHERE u.nom = :nom")
+	@NamedQuery(name = "Login", query = "SELECT u FROM Utilisateur u WHERE u.nom = :nom AND u.motDePass = :motDePass")
 })
-public class Utilisateur {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,24 +22,22 @@ public class Utilisateur {
 	@Column(name = "user")
 	private String nom;
 	@Column(name = "password")
-	private String motDePass;
+	private String password;
 	@Column(name = "role")
 	private String role;
 
-	public Utilisateur() {
+	public User() {
 		
 	}
 
-	public Utilisateur(String nom, String motDePass) {
-		super();
+	public User(String nom, String password) {
 		this.nom = nom;
-		this.motDePass = motDePass;
+		this.password = password;
 	}
 
 	
 	
-	public Utilisateur(String id, String nom, String role) {
-		super();
+	public User(String id, String nom, String role) {
 		this.id = id;
 		this.nom = nom;
 		this.role = role;
@@ -49,14 +46,6 @@ public class Utilisateur {
 	@Override
 	public String toString() {
 		return "Utilisateur [id=" + id + ", nom=" + nom + ", role=" + role + "]";
-	}
-
-	public Utilisateur(String id, String nom, String motDePass, String role) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.motDePass = motDePass;
-		this.role = role;
 	}
 
 	
